@@ -28,7 +28,7 @@
 
 using namespace OpenZWaveDotNet;
 using namespace OpenZWave;
-using namespace Runtime::InteropServices;
+//using namespace Runtime::InteropServices;
 
 //-----------------------------------------------------------------------------
 //	<ZWOptions::Create>
@@ -36,44 +36,44 @@ using namespace Runtime::InteropServices;
 //-----------------------------------------------------------------------------
 void ZWOptions::Create
 (
-	String^ _configPath,
-	String^	_userPath,
-	String^	_commandLine
-)
+	Platform::String^ _configPath,
+	Platform::String^	_userPath,
+	Platform::String^	_commandLine
+	)
 {
 	// Create the Manager singleton
-	const char* config = (const char*)(Marshal::StringToHGlobalAnsi(_configPath)).ToPointer();
+	/*const char* config = (const char*)(Marshal::StringToHGlobalAnsi(_configPath)).ToPointer();
 	const char* user = (const char*)(Marshal::StringToHGlobalAnsi(_userPath)).ToPointer();
 	const char* command = (const char*)(Marshal::StringToHGlobalAnsi(_commandLine)).ToPointer();
-	Options::Create( config, user, command );
+	Options::Create( config, user, command );*/
 }
 
 //-----------------------------------------------------------------------------
 // <ZWOptions::AddOptionBool>
 // Add a boolean option to the program
 //-----------------------------------------------------------------------------
-bool ZWOptions::AddOptionBool
-( 
-	String^ _name,
-	bool _default
-)
-{ 
-	const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
-	return Options::Get()->AddOptionBool( name, _default ); 
-}
+//bool ZWOptions::AddOptionBool
+//( 
+//	String^ _name,
+//	bool _default
+//)
+//{ 
+//	const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
+//	return Options::Get()->AddOptionBool( name, _default ); 
+//}
 
 //-----------------------------------------------------------------------------
 // <ZWOptions::AddOptionInt>
 // Add an integer option to the program
 //-----------------------------------------------------------------------------
 bool ZWOptions::AddOptionInt
-( 
-	String^ _name,
+(
+	Platform::String^ _name,
 	int32 _default
-)
-{ 
-	const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
-	return Options::Get()->AddOptionInt( name, _default ); 
+	)
+{
+	//const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
+	return true; // Options::Get()->AddOptionInt(name, _default);
 }
 
 //-----------------------------------------------------------------------------
@@ -81,86 +81,86 @@ bool ZWOptions::AddOptionInt
 // Add a string option to the program
 //-----------------------------------------------------------------------------
 bool ZWOptions::AddOptionString
-( 
-	String^ _name,
-	String^ _default,
+(
+	Platform::String^ _name,
+	Platform::String^ _default,
 	bool _append
-)
-{ 
-	const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
-	const char* defaultStr = (const char*)(Marshal::StringToHGlobalAnsi(_default)).ToPointer();
-	return Options::Get()->AddOptionString( name, defaultStr, _append ); 
+	)
+{
+	/*const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
+	const char* defaultStr = (const char*)(Marshal::StringToHGlobalAnsi(_default)).ToPointer();*/
+	return true; // Options::Get()->AddOptionString(name, defaultStr, _append);
 }
 
 //-----------------------------------------------------------------------------
 // <ZWOptions::GetOptionAsBool>
 // Gets the value of a boolean option
 //-----------------------------------------------------------------------------
-bool ZWOptions::GetOptionAsBool
-( 
-	String^ _name,
-	[Out] System::Boolean %o_value
-)
-{ 
-	bool value;
-	if( Options::Get()->GetOptionAsBool( (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer(), &value ) )
-	{
-		o_value = value;
-		return true;
-	}
-	return false;
-}
-
-//-----------------------------------------------------------------------------
-// <ZWOptions::GetOptionAsInt>
-// Gets the value of an integer option
-//-----------------------------------------------------------------------------
-bool ZWOptions::GetOptionAsInt
-( 
-	String^ _name,
-	[Out] System::Int32 %o_value
-)
-{ 
-	int32 value;
-	if( Options::Get()->GetOptionAsInt( (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer(), &value ) )
-	{
-		o_value = value;
-		return true;
-	}
-	return false;
-}
-
-//-----------------------------------------------------------------------------
-// <ZWOptions::GetOptionAsString>
-// Gets the value of a string option
-//-----------------------------------------------------------------------------
-bool ZWOptions::GetOptionAsString
-( 
-	String^ _name,
-	[Out] String^ %o_value 
-)
-{ 
-	string value;
-	if( Options::Get()->GetOptionAsString( (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer(), &value ) )
-	{
-		o_value = gcnew String(value.c_str());
-		return true;
-	}
-	return false;
-}
-
-//-----------------------------------------------------------------------------
-// <ZWOptions::GetOptionType>
-// Gets the type of the value stored by the option
-//-----------------------------------------------------------------------------
-ZWOptionType ZWOptions::GetOptionType
-(
-	String^ _name
-)
-{
-	const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
-	return (ZWOptionType)Enum::ToObject( ZWOptionType::typeid, Options::Get()->GetOptionType( name ) );
-}
+//bool ZWOptions::GetOptionAsBool
+//(
+//	String^ _name,
+//	[Out] System::Boolean %o_value
+//	)
+//{
+//	bool value;
+//	if (Options::Get()->GetOptionAsBool((const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer(), &value))
+//	{
+//		o_value = value;
+//		return true;
+//	}
+//	return false;
+//}
+//
+////-----------------------------------------------------------------------------
+//// <ZWOptions::GetOptionAsInt>
+//// Gets the value of an integer option
+////-----------------------------------------------------------------------------
+//bool ZWOptions::GetOptionAsInt
+//(
+//	String^ _name,
+//	[Out] System::Int32 %o_value
+//	)
+//{
+//	int32 value;
+//	if (Options::Get()->GetOptionAsInt((const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer(), &value))
+//	{
+//		o_value = value;
+//		return true;
+//	}
+//	return false;
+//}
+//
+////-----------------------------------------------------------------------------
+//// <ZWOptions::GetOptionAsString>
+//// Gets the value of a string option
+////-----------------------------------------------------------------------------
+//bool ZWOptions::GetOptionAsString
+//(
+//	String^ _name,
+//	[Out] String^ %o_value
+//	)
+//{
+//	string value;
+//	if (Options::Get()->GetOptionAsString((const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer(), &value))
+//	{
+//		o_value = gcnew String(value.c_str());
+//		return true;
+//	}
+//	return false;
+//}
+//
+////-----------------------------------------------------------------------------
+//// <ZWOptions::GetOptionType>
+//// Gets the type of the value stored by the option
+////-----------------------------------------------------------------------------
+//ZWOptionType ZWOptions::GetOptionType
+//(
+//	String^ _name
+//	)
+//{
+//	const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
+//	return (ZWOptionType)Enum::ToObject(ZWOptionType::typeid, Options::Get()->GetOptionType(name));
+//}
 
 
 

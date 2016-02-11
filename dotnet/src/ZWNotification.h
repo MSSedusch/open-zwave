@@ -44,15 +44,15 @@
 //#include <msclr/auto_gcroot.h>
 //#include <msclr/lock.h>
 
-using namespace System;
-using namespace System::Threading;
-using namespace System::Collections::Generic;
+//using namespace System;
+//using namespace System::Threading;
+//using namespace System::Collections::Generic;
 using namespace OpenZWave;
-using namespace Runtime::InteropServices;
+//using namespace Runtime::InteropServices;
 
 namespace OpenZWaveDotNet
 {
-	public ref class ZWNotification
+	public ref class ZWNotification sealed
 	{
 	public:
 		enum class Type
@@ -101,22 +101,22 @@ namespace OpenZWaveDotNet
 			Alive = Notification::Code_Alive
 		};
 
-		ZWNotification( Notification* notification )
-		{
-			m_type = (Type)Enum::ToObject( Type::typeid, notification->GetType() );
-			m_byte = notification->GetByte();
+		//ZWNotification( Notification* notification )
+		//{
+		//	//m_type = (Type)Enum::ToObject( Type::typeid, notification->GetType() );
+		//	//m_byte = notification->GetByte();
 
-			//Check if notification is either NodeEvent or ControllerCommand, otherwise GetEvent() will fail
-			if ((m_type == Type::NodeEvent) || (m_type == Type::ControllerCommand))
-			{
-				m_event = notification->GetEvent();
-			}			
+		//	////Check if notification is either NodeEvent or ControllerCommand, otherwise GetEvent() will fail
+		//	//if ((m_type == Type::NodeEvent) || (m_type == Type::ControllerCommand))
+		//	//{
+		//	//	m_event = notification->GetEvent();
+		//	//}			
 
-			m_valueId = gcnew ZWValueID( notification->GetValueID() );
-		}
+		//	//m_valueId = gcnew ZWValueID( notification->GetValueID() );
+		//}
 
 		Type GetType(){ return m_type; }
-		Code GetCode() { return (Code)Enum::ToObject( Code::typeid, m_byte); }
+		//Code GetCode() { return (Code)Enum::ToObject( Code::typeid, m_byte); }
 		uint32 GetHomeId(){ return m_valueId->GetHomeId(); }
 		uint8 GetNodeId(){ return m_valueId->GetNodeId(); }
 		ZWValueID^ GetValueID(){ return m_valueId; }

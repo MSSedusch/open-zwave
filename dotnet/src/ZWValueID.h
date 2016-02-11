@@ -34,15 +34,15 @@
 //#include <msclr/auto_gcroot.h>
 //#include <msclr/lock.h>
 
-using namespace System;
-using namespace System::Threading;
-using namespace System::Collections::Generic;
+//using namespace System;
+//using namespace System::Threading;
+//using namespace System::Collections::Generic;
 using namespace OpenZWave;
-using namespace Runtime::InteropServices;
+//using namespace Runtime::InteropServices;
 
 namespace OpenZWaveDotNet 
 {
-	public ref class ZWValueID
+	public ref class ZWValueID sealed
 	{
 	public:
 		enum class ValueGenre
@@ -96,10 +96,10 @@ namespace OpenZWaveDotNet
 			m_valueId = new ValueID( homeId, nodeId, (ValueID::ValueGenre)genre, commandClassId, instance, valueIndex, (ValueID::ValueType)type );
 		}
 
-		ZWValueID( ValueID const& valueId )
+		/*ZWValueID( ValueID const& valueId )
 		{ 
 			m_valueId = new ValueID( valueId );
-		}
+		}*/
 
 
 		~ZWValueID()
@@ -108,22 +108,22 @@ namespace OpenZWaveDotNet
 		}
 
 
-		ValueID CreateUnmanagedValueID(){ return ValueID( *m_valueId ); }
+		//ValueID CreateUnmanagedValueID(){ return ValueID( *m_valueId ); }
 
 		uint32		GetHomeId()			{ return m_valueId->GetHomeId(); }
 		uint8		GetNodeId()			{ return m_valueId->GetNodeId(); }
-		ValueGenre	GetGenre()			{ return (ValueGenre)Enum::ToObject( ValueGenre::typeid, m_valueId->GetGenre() ); }
+		//ValueGenre	GetGenre()			{ return (ValueGenre)Enum::ToObject( ValueGenre::typeid, m_valueId->GetGenre() ); }
 		uint8		GetCommandClassId()	{ return m_valueId->GetCommandClassId(); }
 		uint8		GetInstance()		{ return m_valueId->GetInstance(); }
 		uint8		GetIndex()			{ return m_valueId->GetIndex(); }
-		ValueType	GetType()			{ return (ValueType)Enum::ToObject( ValueType::typeid, m_valueId->GetType() ); }
+		//ValueType	GetType()			{ return (ValueType)Enum::ToObject( ValueType::typeid, m_valueId->GetType() ); }
 		uint64		GetId()				{ return m_valueId->GetId(); }
 
 		// Comparison Operators
-		bool operator ==	( ZWValueID^ _other ){ return( (*m_valueId) == (*_other->m_valueId) ); }
-		bool operator !=	( ZWValueID^ _other ){ return( (*m_valueId) != (*_other->m_valueId) ); }
-		bool operator <		( ZWValueID^ _other ){ return( (*m_valueId) < (*_other->m_valueId) ); }
-		bool operator >		( ZWValueID^ _other ){ return( (*m_valueId) > (*_other->m_valueId) ); }
+		//bool operator ==	( ZWValueID^ _other ){ return( (*m_valueId) == (*_other->m_valueId) ); }
+		//bool operator !=	( ZWValueID^ _other ){ return( (*m_valueId) != (*_other->m_valueId) ); }
+		//bool operator <		( ZWValueID^ _other ){ return( (*m_valueId) < (*_other->m_valueId) ); }
+		//bool operator >		( ZWValueID^ _other ){ return( (*m_valueId) > (*_other->m_valueId) ); }
 
 	internal:
 		ValueID* m_valueId;

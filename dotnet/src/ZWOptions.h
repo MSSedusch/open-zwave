@@ -34,10 +34,10 @@
 
 #include "Options.h"
 
-using namespace System;
-using namespace System::Threading;
-using namespace System::Collections::Generic;
-using namespace Runtime::InteropServices;
+//using namespace System;
+//using namespace System::Threading;
+//using namespace System::Collections::Generic;
+//using namespace Runtime::InteropServices;
 using namespace OpenZWave;
 
 
@@ -78,7 +78,7 @@ namespace OpenZWaveDotNet
 	 * so that no more calls aside from GetOptionAs may be made.
 	 * 4) Create the OpenZWave Manager object.
 	 */
-	public ref class ZWOptions
+	public ref class ZWOptions sealed
 	{
 	public:
    		/**
@@ -109,7 +109,7 @@ namespace OpenZWaveDotNet
 		 * that option values should be separated by a space.
 		 * \see Get, Destroy, AddOption, GetOptionAs, Lock
 		 */
-		void Create( String^ _configPath, String^ _userPath, String^ _commandLine );
+		void Create(Platform::String^ _configPath, Platform::String^ _userPath, Platform::String^ _commandLine );
 
 		/**
 		 * Deletes the Options and cleans up any associated objects.
@@ -141,7 +141,7 @@ namespace OpenZWaveDotNet
 		 * \param _default the default value for this option.
 		 * \see GetOptionAsBool
 		 */
-		bool AddOptionBool( String^ _name, bool _default );
+		bool AddOptionBool(Platform::String^ _name, bool _default );
 
 		/**
 		 * Add an integer option to the program.
@@ -151,7 +151,7 @@ namespace OpenZWaveDotNet
 		 * \param _default the default value for this option.
 		 * \see GetOptionAsInt
 		 */
-		bool AddOptionInt( String^ _name, int32 _default );
+		bool AddOptionInt(Platform::String^ _name, int32 _default );
 
 		/**
 		 * Add a string option to the program.
@@ -164,7 +164,7 @@ namespace OpenZWaveDotNet
 		 * newer values will overwrite older ones.
 		 * \see GetOptionAsString
 		 */
-		bool AddOptionString( String^ _name, String^ _default, bool _append );
+		bool AddOptionString(Platform::String^ _name, Platform::String^ _default, bool _append );
 
 		/**
 		 * Get the value of a boolean option.
@@ -174,7 +174,7 @@ namespace OpenZWaveDotNet
 		 * option does not exist, or does not contain a boolean value
 		 * \see AddOptionBool, GetOptionType
 		 */
-		bool GetOptionAsBool( String^ _name, [Out] System::Boolean %o_value );
+		//bool GetOptionAsBool(Platform::String^ _name, [Out] System::Boolean %o_value );
 
 		/**
 		 * Get the value of an integer option.
@@ -184,7 +184,7 @@ namespace OpenZWaveDotNet
 		 * option does not exist, or does not contain an integer value
 		 * \see AddOptionInt, GetOptionType
 		 */
-		bool GetOptionAsInt( String^ _name, [Out] System::Int32 %o_value );
+		//bool GetOptionAsInt(Platform::String^ _name, [Out] System::Int32 %o_value );
 
 		/**
 		 * Get the value of a string option.
@@ -194,7 +194,7 @@ namespace OpenZWaveDotNet
 		 * option does not exist, or does not contain a string value
 		 * \see AddOptionString, GetOptionType 
 		 */
-		bool GetOptionAsString( String^ _name, [Out] String^ %o_value );
+		//bool GetOptionAsString( String^ _name, [Out] String^ %o_value );
 
 		/**
 		 * Get the type of value stored in an option.
@@ -203,7 +203,7 @@ namespace OpenZWaveDotNet
 		 * option does not exist, OptionType_Invalid is returned.
 		 * \see GetOptionAsBool, GetOptionAsInt, GetOptionAsString
 		 */
-		ZWOptionType GetOptionType( String^ _name );
+		//ZWOptionType GetOptionType( String^ _name );
 
 		/**
 		 * Test whether the options have been locked.
