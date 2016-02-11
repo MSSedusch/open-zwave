@@ -29,11 +29,12 @@
 
 #include <Windows.h>
 #include <stdio.h>
-#include <msclr/auto_gcroot.h>
-#include <msclr/lock.h>
+//#include <msclr/auto_gcroot.h>
+//#include <msclr/lock.h>
 
 #include "ZWValueID.h"
 #include "ZWNotification.h"
+#include "Misc.h"
 
 #include "Manager.h"
 #include "ValueID.h"
@@ -44,7 +45,7 @@
 using namespace System;
 using namespace System::Threading;
 using namespace System::Collections::Generic;
-using namespace Runtime::InteropServices;
+using namespace System::Runtime::InteropServices;
 using namespace OpenZWave;
 
 
@@ -313,8 +314,8 @@ namespace OpenZWaveDotNet
 		 * \return True if a new driver was created, false if a driver for the controller already exists.
 		 * \see Create, Get, RemoveDriver
 		 */
-		bool AddDriver( String^ serialPortName ){ return Manager::Get()->AddDriver((const char*)(Marshal::StringToHGlobalAnsi(serialPortName)).ToPointer()); }
-		bool AddDriver( String^ serialPortName, ZWControllerInterface interfaceType ){ return Manager::Get()->AddDriver((const char*)(Marshal::StringToHGlobalAnsi(serialPortName)).ToPointer(), (Driver::ControllerInterface) interfaceType); }
+		bool AddDriver( Platfrom::String serialPortName ){ return Manager::Get()->AddDriver(ConvertTo<string>(serialPortName)); }
+		bool AddDriver( Platform::String serialPortName, ZWControllerInterface interfaceType ){ return Manager::Get()->AddDriver((const char*)(Marshal::StringToHGlobalAnsi(serialPortName)).ToPointer(), (Driver::ControllerInterface) interfaceType); }
 
 		/**
 		 * \brief Removes the driver for a Z-Wave controller, and closes the serial port.
@@ -324,7 +325,7 @@ namespace OpenZWaveDotNet
 		 * \returns True if the driver was removed, false if it could not be found.
 		 * \see Destroy, AddDriver
 		 */
-		bool RemoveDriver( String^ serialPortName ){ return Manager::Get()->RemoveDriver((const char*)(Marshal::StringToHGlobalAnsi(serialPortName)).ToPointer()); }
+		bool RemoveDriver( Platform::String serialPortName ){ return Manager::Get()->RemoveDriver((const char*)(Marshal::StringToHGlobalAnsi(serialPortName)).ToPointer()); }
 
 		/**
 		 * \brief Get the node ID of the Z-Wave controller.
@@ -651,7 +652,7 @@ namespace OpenZWaveDotNet
 		 * \param nodeId The ID of the node to query.
 		 * \return A string containing the label text.
 		 */
-		String^ GetNodeType( uint32 homeId, uint8 nodeId ){ return gcnew String(Manager::Get()->GetNodeType(homeId,nodeId).c_str()); }
+		Platform::String^ GetNodeType( uint32 homeId, uint8 nodeId ){ return ref new Platform::String(Manager::Get()->GetNodeType(homeId,nodeId).c_str()); }
 
 		/**
 		 * \brief Get the bitmap of this node's neighbors
@@ -660,7 +661,7 @@ namespace OpenZWaveDotNet
 		 * \param nodeId The ID of the node to query.
 		 * \param o_associations An array of 29 uint8s to hold the neighbor bitmap
 		 */
-		uint32 GetNodeNeighbors( uint32 const homeId, uint8 const nodeId, [Out] cli::array<Byte>^ %o_associations );
+		uint32 GetNodeNeighbors( uint32 const homeId, uint8 const nodeId, [Out] Platform::Array<BYTE>^ o_associations );
 
 		/**
 		 * \brief Get the manufacturer name of a device.

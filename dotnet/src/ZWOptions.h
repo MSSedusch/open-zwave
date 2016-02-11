@@ -29,8 +29,8 @@
 
 #include <Windows.h>
 #include <stdio.h>
-#include <msclr/auto_gcroot.h>
-#include <msclr/lock.h>
+//#include <msclr/auto_gcroot.h>
+//#include <msclr/lock.h>
 
 #include "Options.h"
 

@@ -41,8 +41,8 @@
 #include "Notification.h"
 #include "stdio.h"
 
-#include <msclr/auto_gcroot.h>
-#include <msclr/lock.h>
+//#include <msclr/auto_gcroot.h>
+//#include <msclr/lock.h>
 
 using namespace System;
 using namespace System::Threading;
