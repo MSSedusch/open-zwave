@@ -147,11 +147,6 @@ namespace OpenZWaveWinRT
 			m_valueId = new ValueID( homeId, nodeId, (ValueID::ValueGenre)genre, commandClassId, instance, valueIndex, (ValueID::ValueType)type );
 		}
 
-		/*ZWValueID( ValueID const& valueId )
-		{ 
-			m_valueId = new ValueID( valueId );
-		}*/
-
 
 		virtual ~ZWValueID()
 		{ 
@@ -177,6 +172,11 @@ namespace OpenZWaveWinRT
 		//bool operator >		( ZWValueID^ _other ){ return( (*m_valueId) > (*_other->m_valueId) ); }
 
 	internal:
+		ZWValueID(ValueID const& valueId)
+		{
+			m_valueId = new ValueID(valueId);
+		}
+
 		ValueID CreateUnmanagedValueID() { return ValueID(*m_valueId); }
 		ValueID* m_valueId;
 	};

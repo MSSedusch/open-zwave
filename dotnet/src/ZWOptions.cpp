@@ -25,9 +25,11 @@
 //
 //-----------------------------------------------------------------------------
 #include "ZWOptions.h"
+#include "Misc.h"
 
 using namespace OpenZWaveWinRT;
 using namespace OpenZWave;
+using namespace DsbCommon;
 //using namespace Runtime::InteropServices;
 
 //-----------------------------------------------------------------------------
@@ -42,10 +44,7 @@ void ZWOptions::Create
 	)
 {
 	// Create the Manager singleton
-	/*const char* config = (const char*)(Marshal::StringToHGlobalAnsi(_configPath)).ToPointer();
-	const char* user = (const char*)(Marshal::StringToHGlobalAnsi(_userPath)).ToPointer();
-	const char* command = (const char*)(Marshal::StringToHGlobalAnsi(_commandLine)).ToPointer();
-	Options::Create( config, user, command );*/
+	Options::Create( ConvertTo<string>(_configPath), ConvertTo<string>(_userPath), ConvertTo<string>(_commandLine) );
 }
 
 //-----------------------------------------------------------------------------
@@ -58,8 +57,7 @@ bool ZWOptions::AddOptionBool
 	bool _default
 )
 { 
-	//const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
-	return true; // Options::Get()->AddOptionBool(name, _default);
+	return Options::Get()->AddOptionBool(ConvertTo<string>(_name), _default);
 }
 
 //-----------------------------------------------------------------------------
@@ -71,9 +69,8 @@ bool ZWOptions::AddOptionInt
 	Platform::String^ _name,
 	int32 _default
 	)
-{
-	//const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
-	return true; // Options::Get()->AddOptionInt(name, _default);
+{	
+	return Options::Get()->AddOptionInt(ConvertTo<string>(_name), _default);
 }
 
 //-----------------------------------------------------------------------------
@@ -86,10 +83,8 @@ bool ZWOptions::AddOptionString
 	Platform::String^ _default,
 	bool _append
 	)
-{
-	/*const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
-	const char* defaultStr = (const char*)(Marshal::StringToHGlobalAnsi(_default)).ToPointer();*/
-	return true; // Options::Get()->AddOptionString(name, defaultStr, _append);
+{	
+	return Options::Get()->AddOptionString(ConvertTo<string>(_name), ConvertTo<string>(_default), _append);
 }
 
 //-----------------------------------------------------------------------------
@@ -111,24 +106,24 @@ bool ZWOptions::AddOptionString
 //	return false;
 //}
 //
-////-----------------------------------------------------------------------------
-//// <ZWOptions::GetOptionAsInt>
-//// Gets the value of an integer option
-////-----------------------------------------------------------------------------
-//bool ZWOptions::GetOptionAsInt
-//(
-//	String^ _name,
-//	[Out] System::Int32 %o_value
-//	)
-//{
-//	int32 value;
-//	if (Options::Get()->GetOptionAsInt((const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer(), &value))
-//	{
-//		o_value = value;
-//		return true;
-//	}
-//	return false;
-//}
+//-----------------------------------------------------------------------------
+// <ZWOptions::GetOptionAsInt>
+// Gets the value of an integer option
+//-----------------------------------------------------------------------------
+bool ZWOptions::GetOptionAsInt
+(
+	Platform::String^ _name,
+	int32* o_value
+	)
+{
+	int32 value;
+	if (Options::Get()->GetOptionAsInt(ConvertTo<string>(_name), &value))
+	{
+		*o_value = value;
+		return true;
+	}
+	return false;
+}
 //
 ////-----------------------------------------------------------------------------
 //// <ZWOptions::GetOptionAsString>

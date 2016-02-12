@@ -59,9 +59,9 @@ void ZWManager::Create
 //-----------------------------------------------------------------------------
 void ZWManager::OnNotificationFromUnmanaged(Notification const* _notification, void* _context)
 {
-	//ZWManager^ manager = reinterpret_cast<ZWManager^>(_context);
-	//ZWNotification^ notification = ref new ZWNotification( _notification );
-	//manager->OnNotification(notification);
+	ZWManager^ manager = reinterpret_cast<ZWManager^>(_context);
+	ZWNotification^ notification = ref new ZWNotification( _notification );
+	manager->OnNotification(notification);
 }
 
 //-----------------------------------------------------------------------------
@@ -99,208 +99,216 @@ bool ZWManager::GetValueAsBool
 // <ZWManager::GetValueAsByte>
 // Gets a value as a Byte
 //-----------------------------------------------------------------------------
-//bool ZWManager::GetValueAsByte
-//( 
-//	ZWValueID^ id,
-//	[Out] System::Byte %o_value
-//)
-//{ 
-//	uint8 value;
-//	if( Manager::Get()->GetValueAsByte(id->CreateUnmanagedValueID(), &value ) )
-//	{
-//		o_value = value;
-//		return true;
-//	}
-//	return false;
-//}
-//
-////-----------------------------------------------------------------------------
-//// <ZWManager::GetValueAsDecimal>
-//// Gets a value as a Decimal
-////-----------------------------------------------------------------------------
+bool ZWManager::GetValueAsByte
+( 
+	ZWValueID^ id,
+	BYTE o_value
+)
+{ 
+	uint8 value;
+	if( Manager::Get()->GetValueAsByte(id->CreateUnmanagedValueID(), &value ) )
+	{
+		o_value = value;
+		return true;
+	}
+	return false;
+}
+
+//-----------------------------------------------------------------------------
+// <ZWManager::GetValueAsDecimal>
+// Gets a value as a Decimal
+//-----------------------------------------------------------------------------
 //bool ZWManager::GetValueAsDecimal
 //( 
 //	ZWValueID^ id,
-//	[Out] System::Decimal %o_value
+//	DECIMAL o_value
 //)
 //{ 
 //	string value;
 //	if( Manager::Get()->GetValueAsString(id->CreateUnmanagedValueID(), &value ) )
 //	{
 //		String^ decimal = gcnew String(value.c_str());
-//		o_value = Decimal::Parse( decimal );
+//		o_value = parse ::Decimal::Parse( decimal );
 //		return true;
 //	}
 //	return false;
 //}
 //
-////-----------------------------------------------------------------------------
-//// <ZWManager::GetValueAsInt>
-//// Gets a value as an Int32
-////-----------------------------------------------------------------------------
-//bool ZWManager::GetValueAsInt
-//( 
-//	ZWValueID^ id,
-//	[Out] System::Int32 %o_value
-//)
-//{ 
-//	int32 value;
-//	if( Manager::Get()->GetValueAsInt(id->CreateUnmanagedValueID(), &value ) )
-//	{
-//		o_value = value;
-//		return true;
-//	}
-//	return false;
-//}
+//-----------------------------------------------------------------------------
+// <ZWManager::GetValueAsInt>
+// Gets a value as an Int32
+//-----------------------------------------------------------------------------
+bool ZWManager::GetValueAsInt
+( 
+	ZWValueID^ id,
+	int32* o_value
+)
+{ 
+	int32 value;
+	if( Manager::Get()->GetValueAsInt(id->CreateUnmanagedValueID(), &value ) )
+	{
+		o_value = &value;
+		return true;
+	}
+	return false;
+}
+
+//-----------------------------------------------------------------------------
+// <ZWManager::GetValueAsShort>
+// Gets a value as an Int16
+//-----------------------------------------------------------------------------
+bool ZWManager::GetValueAsShort
+( 
+	ZWValueID^ id,
+	int16* o_value
+)
+{ 
+	int16 value;
+	if( Manager::Get()->GetValueAsShort(id->CreateUnmanagedValueID(), &value ) )
+	{
+		o_value = &value;
+		return true;
+	}
+	return false;
+}
+
+//-----------------------------------------------------------------------------
+// <ZWManager::GetValueAsString>
+// Gets a value as a String
+//-----------------------------------------------------------------------------
+bool ZWManager::GetValueAsString
+( 
+	ZWValueID^ id, 
+	Platform::String^ o_value
+)
+{ 
+	string value;
+	if( Manager::Get()->GetValueAsString(id->CreateUnmanagedValueID(), &value ) )
+	{
+		std::wstring wid_str = std::wstring(value.begin(), value.end());
+		const wchar_t* w_char = wid_str.c_str();
+		o_value = ref new Platform::String(w_char);
+		return true;
+	}
+	return false;
+}
+
+//-----------------------------------------------------------------------------
+// <ZWManager::GetValueListSelection>
+// Gets the selected item from a list value (returning a string)
+//-----------------------------------------------------------------------------
+bool ZWManager::GetValueListSelection
+( 
+	ZWValueID^ id, 
+	Platform::String^ o_value
+)
+{ 
+	string value;
+	if( Manager::Get()->GetValueListSelection(id->CreateUnmanagedValueID(), &value ) )
+	{
+		std::wstring wid_str = std::wstring(value.begin(), value.end());
+		const wchar_t* w_char = wid_str.c_str();
+		o_value = ref new Platform::String(w_char);
+		return true;
+	}
+	return false;
+}
+
+//-----------------------------------------------------------------------------
+// <ZWManager::GetValueListSelection>
+// Gets the selected item from a list value (returning the value)
+//-----------------------------------------------------------------------------
+bool ZWManager::GetValueListSelection
+( 
+	ZWValueID^ id, 
+	int32* o_value
+)
+{ 
+	int32 value;
+	if( Manager::Get()->GetValueListSelection(id->CreateUnmanagedValueID(), &value ) )
+	{
+		o_value = &value;
+		return true;
+	}
+	return false;
+}
+
+//-----------------------------------------------------------------------------
+// <ZWManager::GetValueListItems>
+// Gets the list of items from a list value
+//-----------------------------------------------------------------------------
+bool ZWManager::GetValueListItems
+( 
+	ZWValueID^ id, 
+	Platform::Array<Platform::String^>^* o_value
+)
+{
+	vector<string> items;
+	if( Manager::Get()->GetValueListItems(id->CreateUnmanagedValueID(), &items ) )
+	{
+		auto temp = ref new Platform::Array<Platform::String^>(items.size());
+		for( uint32 i=0; i<items.size(); ++i )
+		{
+			std::wstring wid_str = std::wstring(items[i].begin(), items[i].end());
+			const wchar_t* w_char = wid_str.c_str();
+			temp[i] = ref new Platform::String(w_char);
+		}
+		*o_value = temp;
+		return true;
+	}
+	return false;
+}
+
+//-----------------------------------------------------------------------------
+// <ZWManager::GetValueListValues>
+// Gets the list of values from a list value
+//-----------------------------------------------------------------------------
+bool ZWManager::GetValueListValues
+( 
+	ZWValueID^ id, 
+	Platform::Array<int>^* o_value
+)
+{
+	vector<int32> items;
+	if( Manager::Get()->GetValueListValues(id->CreateUnmanagedValueID(), &items ) )
+	{		
+		auto temp = ref new Platform::Array<int>(items.size());
+		for( uint32 i=0; i<items.size(); ++i )
+		{
+			temp[i] = items[i];
+		}
+		*o_value = temp;
+		return true;
+	}
+	return false;
+}
 //
-////-----------------------------------------------------------------------------
-//// <ZWManager::GetValueAsShort>
-//// Gets a value as an Int16
-////-----------------------------------------------------------------------------
-//bool ZWManager::GetValueAsShort
-//( 
-//	ZWValueID^ id,
-//	[Out] System::Int16 %o_value
-//)
-//{ 
-//	int16 value;
-//	if( Manager::Get()->GetValueAsShort(id->CreateUnmanagedValueID(), &value ) )
-//	{
-//		o_value = value;
-//		return true;
-//	}
-//	return false;
-//}
-//
-////-----------------------------------------------------------------------------
-//// <ZWManager::GetValueAsString>
-//// Gets a value as a String
-////-----------------------------------------------------------------------------
-//bool ZWManager::GetValueAsString
-//( 
-//	ZWValueID^ id, 
-//	[Out] String^ %o_value 
-//)
-//{ 
-//	string value;
-//	if( Manager::Get()->GetValueAsString(id->CreateUnmanagedValueID(), &value ) )
-//	{
-//		o_value = gcnew String(value.c_str());
-//		return true;
-//	}
-//	return false;
-//}
-//
-////-----------------------------------------------------------------------------
-//// <ZWManager::GetValueListSelection>
-//// Gets the selected item from a list value (returning a string)
-////-----------------------------------------------------------------------------
-//bool ZWManager::GetValueListSelection
-//( 
-//	ZWValueID^ id, 
-//	[Out] String^ %o_value 
-//)
-//{ 
-//	string value;
-//	if( Manager::Get()->GetValueListSelection(id->CreateUnmanagedValueID(), &value ) )
-//	{
-//		o_value = gcnew String(value.c_str());
-//		return true;
-//	}
-//	return false;
-//}
-//
-////-----------------------------------------------------------------------------
-//// <ZWManager::GetValueListSelection>
-//// Gets the selected item from a list value (returning the value)
-////-----------------------------------------------------------------------------
-//bool ZWManager::GetValueListSelection
-//( 
-//	ZWValueID^ id, 
-//	[Out] System::Int32 %o_value 
-//)
-//{ 
-//	Int32 value;
-//	if( Manager::Get()->GetValueListSelection(id->CreateUnmanagedValueID(), &value ) )
-//	{
-//		o_value = value;
-//		return true;
-//	}
-//	return false;
-//}
-//
-////-----------------------------------------------------------------------------
-//// <ZWManager::GetValueListItems>
-//// Gets the list of items from a list value
-////-----------------------------------------------------------------------------
-//bool ZWManager::GetValueListItems
-//( 
-//	ZWValueID^ id, 
-//	[Out] cli::array<String^>^ %o_value
-//)
-//{
-//	vector<string> items;
-//	if( Manager::Get()->GetValueListItems(id->CreateUnmanagedValueID(), &items ) )
-//	{
-//		o_value = gcnew cli::array<String^>(items.size());
-//		for( uint32 i=0; i<items.size(); ++i )
-//		{
-//			o_value[i] = gcnew String( items[i].c_str() );		
-//		}
-//		return true;
-//	}
-//	return false;
-//}
-//
-////-----------------------------------------------------------------------------
-//// <ZWManager::GetValueListValues>
-//// Gets the list of values from a list value
-////-----------------------------------------------------------------------------
-//bool ZWManager::GetValueListValues
-//( 
-//	ZWValueID^ id, 
-//	[Out] cli::array<int>^ %o_value
-//)
-//{
-//	vector<int32> items;
-//	if( Manager::Get()->GetValueListValues(id->CreateUnmanagedValueID(), &items ) )
-//	{
-//		o_value = gcnew cli::array<int>(items.size());
-//		for( uint32 i=0; i<items.size(); ++i )
-//		{
-//			o_value[i] = items[i];
-//		}
-//		return true;
-//	}
-//	return false;
-//}
-//
-////-----------------------------------------------------------------------------
-//// <ZWManager::GetNeighbors>
-//// Gets the neighbors for a node
-////-----------------------------------------------------------------------------
-//uint32 ZWManager::GetNodeNeighbors
-//( 
-//	uint32 homeId,
-//	uint8 nodeId,
-//	[Out] cli::array<Byte>^ %o_neighbors
-//)
-//{
-//	uint8* neighbors;
-//	uint32 numNeighbors = Manager::Get()->GetNodeNeighbors( homeId, nodeId, &neighbors );
-//	if( numNeighbors )
-//	{
-//		o_neighbors = gcnew cli::array<Byte>(numNeighbors);
-//		for( uint32 i=0; i<numNeighbors; ++i )
-//		{
-//			o_neighbors[i] = neighbors[i];		
-//		}
-//		delete [] neighbors;
-//	}
-//
-//	return numNeighbors;
-//}
-//
+//-----------------------------------------------------------------------------
+// <ZWManager::GetNeighbors>
+// Gets the neighbors for a node
+//-----------------------------------------------------------------------------
+uint32 ZWManager::GetNodeNeighbors
+( 
+	uint32 homeId,
+	uint8 nodeId,
+	Platform::Array<BYTE>^* o_neighbors
+)
+{
+	uint8* neighbors;
+	uint32 numNeighbors = Manager::Get()->GetNodeNeighbors( homeId, nodeId, &neighbors );
+	if( numNeighbors )
+	{
+		auto temp = ref new Platform::Array<BYTE>(numNeighbors);
+		for( uint32 i=0; i<numNeighbors; ++i )
+		{
+			temp[i] = neighbors[i];
+		}
+		delete [] neighbors;
+		*o_neighbors = temp;
+	}
+	return numNeighbors;
+}
+
 ////-----------------------------------------------------------------------------
 //// <ZWManager::GetSwitchPoint>
 //// Get switchpoint data from the schedule
@@ -372,25 +380,27 @@ bool ZWManager::GetValueAsBool
 //	return( Manager::Get()->BeginControllerCommand( homeId, (Driver::ControllerCommand)command, (Driver::pfnControllerCallback_t)ip.ToPointer(), NULL, highPower, nodeId ) );
 //}
 //
-//bool ZWManager::GetNodeClassInformation
-//(
-//	uint32 homeId, 
-//	uint8 nodeId, 
-//	uint8 commandClassId, 
-//	[Out] String^ %o_name, 
-//	[Out] System::Byte %o_version
-//)
-//{
-//	string value;
-//	uint8 version;
-//	if (Manager::Get()->GetNodeClassInformation(homeId, nodeId, commandClassId, &value, &version))
-//	{
-//		o_name = gcnew String(value.c_str());
-//		o_version = version;
-//		return true;
-//	}
-//	return false;
-//}
+bool ZWManager::GetNodeClassInformation
+(
+	uint32 homeId, 
+	uint8 nodeId, 
+	uint8 commandClassId, 
+	Platform::String^ o_name, 
+	BYTE o_version
+)
+{
+	string value;
+	uint8 version;
+	if (Manager::Get()->GetNodeClassInformation(homeId, nodeId, commandClassId, &value, &version))
+	{
+		std::wstring wid_str = std::wstring(value.begin(), value.end());
+		const wchar_t* w_char = wid_str.c_str();
+		o_name = ref new Platform::String(w_char);
+		o_version = version;
+		return true;
+	}
+	return false;
+}
 //
 ////-----------------------------------------------------------------------------
 //// <ZWManager::GetAllScenes>
@@ -460,26 +470,26 @@ bool ZWManager::GetValueAsBool
 //	return false;
 //}
 //
-////-----------------------------------------------------------------------------
-//// <ZWManager::SceneGetValueAsByte>
-//// Retrieves a scene's value as an 8-bit unsigned integer
-////-----------------------------------------------------------------------------
-//bool ZWManager::SceneGetValueAsByte
-//(
-//	uint8 sceneId,
-//	ZWValueID^ valueId,
-//	[Out] System::Byte %o_value
-//)
-//{
-//	uint8 value;
-//	if( Manager::Get()->SceneGetValueAsByte( sceneId, valueId->CreateUnmanagedValueID(), &value ) )
-//	{
-//		o_value = value;
-//		return true;
-//	}
-//	return false;
-//}
-//
+//-----------------------------------------------------------------------------
+// <ZWManager::SceneGetValueAsByte>
+// Retrieves a scene's value as an 8-bit unsigned integer
+//-----------------------------------------------------------------------------
+bool ZWManager::SceneGetValueAsByte
+(
+	uint8 sceneId,
+	ZWValueID^ valueId,
+	BYTE* o_value
+)
+{
+	uint8 value;
+	if( Manager::Get()->SceneGetValueAsByte( sceneId, valueId->CreateUnmanagedValueID(), &value ) )
+	{
+		*o_value = value;
+		return true;
+	}
+	return false;
+}
+
 ////-----------------------------------------------------------------------------
 //// <ZWManager::SceneGetValueAsDecimal>
 //// Retrieves a scene's value as a decimal

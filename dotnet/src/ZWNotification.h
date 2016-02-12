@@ -57,22 +57,9 @@ namespace OpenZWaveWinRT
 	public:
 		
 
-	public:
+	public:		
+
 		
-
-		//ZWNotification( Notification* notification )
-		//{
-		//	//m_type = (Type)Enum::ToObject( Type::typeid, notification->GetType() );
-		//	//m_byte = notification->GetByte();
-
-		//	////Check if notification is either NodeEvent or ControllerCommand, otherwise GetEvent() will fail
-		//	//if ((m_type == Type::NodeEvent) || (m_type == Type::ControllerCommand))
-		//	//{
-		//	//	m_event = notification->GetEvent();
-		//	//}			
-
-		//	//m_valueId = gcnew ZWValueID( notification->GetValueID() );
-		//}
 
 		Type GetType(){ return m_type; }
 		//Code GetCode() { return (Code)Enum::ToObject( Code::typeid, m_byte); }
@@ -84,6 +71,21 @@ namespace OpenZWaveWinRT
 		uint8 GetByte(){ return m_byte; }
 
 	internal:
+		ZWNotification(Notification const * notification)
+		{
+			m_type = (Type)notification->GetType();
+			m_byte = notification->GetByte();
+
+			//Check if notification is either NodeEvent or ControllerCommand, otherwise GetEvent() will fail
+			if ((m_type == Type::NodeEvent) || (m_type == Type::ControllerCommand))
+			{
+				m_event = notification->GetEvent();
+			}			
+
+			m_valueId = ref new ZWValueID( notification->GetValueID() );
+		}
+
+
 		Type		m_type;
 		ZWValueID^	m_valueId;
 		uint8		m_byte;

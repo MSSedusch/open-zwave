@@ -184,7 +184,7 @@ namespace OpenZWaveWinRT
 		 * option does not exist, or does not contain an integer value
 		 * \see AddOptionInt, GetOptionType
 		 */
-		//bool GetOptionAsInt(Platform::String^ _name, [Out] System::Int32 %o_value );
+		bool GetOptionAsInt(Platform::String^ _name, int32* o_value );
 
 		/**
 		 * Get the value of a string option.
