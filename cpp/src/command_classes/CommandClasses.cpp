@@ -193,11 +193,11 @@ void CommandClasses::RegisterCommandClasses
 	cc.Register( CentralScene::StaticGetCommandClassId(), CentralScene::StaticGetCommandClassName(), CentralScene::Create );
 	cc.Register( ClimateControlSchedule::StaticGetCommandClassId(), ClimateControlSchedule::StaticGetCommandClassName(), ClimateControlSchedule::Create );
 	cc.Register( Clock::StaticGetCommandClassId(), Clock::StaticGetCommandClassName(), Clock::Create );
-	cc.Register( Color::StaticGetCommandClassId(), Color::StaticGetCommandClassName(), Color::Create );
+	//cc.Register( Color::StaticGetCommandClassId(), Color::StaticGetCommandClassName(), Color::Create );
 	cc.Register( Configuration::StaticGetCommandClassId(), Configuration::StaticGetCommandClassName(), Configuration::Create );
 	cc.Register( ControllerReplication::StaticGetCommandClassId(), ControllerReplication::StaticGetCommandClassName(), ControllerReplication::Create );
 	cc.Register( CRC16Encap::StaticGetCommandClassId(), CRC16Encap::StaticGetCommandClassName(), CRC16Encap::Create );
-	cc.Register( DeviceResetLocally::StaticGetCommandClassId(), DeviceResetLocally::StaticGetCommandClassName(), DeviceResetLocally::Create );
+	//cc.Register( DeviceResetLocally::StaticGetCommandClassId(), DeviceResetLocally::StaticGetCommandClassName(), DeviceResetLocally::Create );
 	cc.Register( DoorLock::StaticGetCommandClassId(), DoorLock::StaticGetCommandClassName(), DoorLock::Create );
 	cc.Register( DoorLockLogging::StaticGetCommandClassId(), DoorLockLogging::StaticGetCommandClassName(), DoorLockLogging::Create);
 	cc.Register( EnergyProduction::StaticGetCommandClassId(), EnergyProduction::StaticGetCommandClassName(), EnergyProduction::Create );
@@ -235,7 +235,7 @@ void CommandClasses::RegisterCommandClasses
 	cc.Register( UserCode::StaticGetCommandClassId(), UserCode::StaticGetCommandClassName(), UserCode::Create );
 	cc.Register( Version::StaticGetCommandClassId(), Version::StaticGetCommandClassName(), Version::Create );
 	cc.Register( WakeUp::StaticGetCommandClassId(), WakeUp::StaticGetCommandClassName(), WakeUp::Create );
-	cc.Register( ZWavePlusInfo::StaticGetCommandClassId(), ZWavePlusInfo::StaticGetCommandClassName(), ZWavePlusInfo::Create );
+	//cc.Register( ZWavePlusInfo::StaticGetCommandClassId(), ZWavePlusInfo::StaticGetCommandClassName(), ZWavePlusInfo::Create );
 
 	// Now all the command classes have been registered, we can modify the
 	// supported command classes array according to the program options.

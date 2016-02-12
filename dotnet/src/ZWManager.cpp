@@ -27,7 +27,7 @@
 
 #include "ZWManager.h"
 
-using namespace OpenZWaveDotNet;
+using namespace OpenZWaveWinRT;
 using namespace OpenZWave;
 //using namespace Runtime::InteropServices;
 
@@ -59,9 +59,9 @@ void ZWManager::Create
 //-----------------------------------------------------------------------------
 void ZWManager::OnNotificationFromUnmanaged(Notification const* _notification, void* _context)
 {
-	ZWManager^ manager = reinterpret_cast<ZWManager^>(_context);
-	ZWNotification^ notification = ref new ZWNotification( _notification );
-	manager->OnNotification(notification);
+	//ZWManager^ manager = reinterpret_cast<ZWManager^>(_context);
+	//ZWNotification^ notification = ref new ZWNotification( _notification );
+	//manager->OnNotification(notification);
 }
 
 //-----------------------------------------------------------------------------

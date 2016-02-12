@@ -30,6 +30,7 @@
 #include "Windows.h"
 #include "ValueID.h"
 #include "stdio.h"
+#include "Notification.h"
 
 //#include <msclr/auto_gcroot.h>
 //#include <msclr/lock.h>
@@ -40,32 +41,82 @@
 using namespace OpenZWave;
 //using namespace Runtime::InteropServices;
 
-namespace OpenZWaveDotNet 
+namespace OpenZWaveWinRT 
 {
-	public ref class ZWValueID sealed
+	public enum class ValueType
 	{
-	public:
-		enum class ValueGenre
-		{
-			Basic	= ValueID::ValueGenre_Basic,
-			User	= ValueID::ValueGenre_User,	
-			Config	= ValueID::ValueGenre_Config,	
-			System	= ValueID::ValueGenre_System
-		};
+		Bool = ValueID::ValueType_Bool,
+		Byte = ValueID::ValueType_Byte,
+		Decimal = ValueID::ValueType_Decimal,
+		Int = ValueID::ValueType_Int,
+		List = ValueID::ValueType_List,
+		Schedule = ValueID::ValueType_Schedule,
+		Short = ValueID::ValueType_Short,
+		String = ValueID::ValueType_String,
+		Button = ValueID::ValueType_Button,
+		Raw = ValueID::ValueType_Raw
+	};
 
-		enum class ValueType
-		{
-			Bool		= ValueID::ValueType_Bool,
-			Byte		= ValueID::ValueType_Byte,
-			Decimal		= ValueID::ValueType_Decimal,
-			Int			= ValueID::ValueType_Int,
-			List		= ValueID::ValueType_List,
-			Schedule	= ValueID::ValueType_Schedule,
-			Short		= ValueID::ValueType_Short,
-			String		= ValueID::ValueType_String,
-			Button		= ValueID::ValueType_Button,
-			Raw		= ValueID::ValueType_Raw
-		};
+	public enum class ValueGenre
+	{
+		Basic = ValueID::ValueGenre_Basic,
+		User = ValueID::ValueGenre_User,
+		Config = ValueID::ValueGenre_Config,
+		System = ValueID::ValueGenre_System
+	};
+
+	public enum class Type
+	{
+		ValueAdded = Notification::Type_ValueAdded,
+		ValueRemoved = Notification::Type_ValueRemoved,
+		ValueChanged = Notification::Type_ValueChanged,
+		ValueRefreshed = Notification::Type_ValueRefreshed,
+		Group = Notification::Type_Group,
+		NodeNew = Notification::Type_NodeNew,
+		NodeAdded = Notification::Type_NodeAdded,
+		NodeRemoved = Notification::Type_NodeRemoved,
+		NodeReset = Notification::Type_NodeReset,
+		NodeProtocolInfo = Notification::Type_NodeProtocolInfo,
+		NodeNaming = Notification::Type_NodeNaming,
+		NodeEvent = Notification::Type_NodeEvent,
+		PollingDisabled = Notification::Type_PollingDisabled,
+		PollingEnabled = Notification::Type_PollingEnabled,
+		SceneEvent = Notification::Type_SceneEvent,
+		CreateButton = Notification::Type_CreateButton,
+		DeleteButton = Notification::Type_DeleteButton,
+		ButtonOn = Notification::Type_ButtonOn,
+		ButtonOff = Notification::Type_ButtonOff,
+		DriverReady = Notification::Type_DriverReady,
+		DriverFailed = Notification::Type_DriverFailed,
+		DriverReset = Notification::Type_DriverReset,
+		EssentialNodeQueriesComplete = Notification::Type_EssentialNodeQueriesComplete,
+		NodeQueriesComplete = Notification::Type_NodeQueriesComplete,
+		AwakeNodesQueried = Notification::Type_AwakeNodesQueried,
+		AllNodesQueriedSomeDead = Notification::Type_AllNodesQueriedSomeDead,
+		AllNodesQueried = Notification::Type_AllNodesQueried,
+		Notification = Notification::Type_Notification,
+		DriverRemoved = Notification::Type_DriverRemoved,
+		ControllerCommand = Notification::Type_ControllerCommand
+	};
+
+	public enum class Code
+	{
+		MsgComplete = Notification::Code_MsgComplete,
+		Timeout = Notification::Code_Timeout,
+		NoOperation = Notification::Code_NoOperation,
+		Awake = Notification::Code_Awake,
+		Sleep = Notification::Code_Sleep,
+		Dead = Notification::Code_Dead,
+		Alive = Notification::Code_Alive
+	};
+
+	public ref class ZWValueID sealed
+	{	
+
+	public:
+		
+
+		
 
 		/**
 		 * Create a ZWValue ID from its component parts.
@@ -85,11 +136,11 @@ namespace OpenZWaveDotNet
 		( 
 			uint32 homeId,
 			uint8 nodeId,
-			ZWValueID::ValueGenre genre,
+			ValueGenre genre,
 			uint8 commandClassId,
 			uint8 instance,
 			uint8 valueIndex,
-			ZWValueID::ValueType type,
+			ValueType type,
 			uint8 pollIntensity
 		)
 		{
@@ -102,13 +153,13 @@ namespace OpenZWaveDotNet
 		}*/
 
 
-		~ZWValueID()
+		virtual ~ZWValueID()
 		{ 
 			delete m_valueId;
 		}
 
 
-		//ValueID CreateUnmanagedValueID(){ return ValueID( *m_valueId ); }
+		//
 
 		uint32		GetHomeId()			{ return m_valueId->GetHomeId(); }
 		uint8		GetNodeId()			{ return m_valueId->GetNodeId(); }
@@ -126,6 +177,7 @@ namespace OpenZWaveDotNet
 		//bool operator >		( ZWValueID^ _other ){ return( (*m_valueId) > (*_other->m_valueId) ); }
 
 	internal:
+		ValueID CreateUnmanagedValueID() { return ValueID(*m_valueId); }
 		ValueID* m_valueId;
 	};
 }

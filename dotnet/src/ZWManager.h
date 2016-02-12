@@ -47,15 +47,16 @@ using namespace System::Threading;
 using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;*/
 using namespace OpenZWave;
+using namespace DsbCommon;
 
 
-namespace OpenZWaveDotNet
+namespace OpenZWaveWinRT
 {
 	// Delegate for handling notification callbacks
 	public delegate void ManagedNotificationsHandler(ZWNotification^ notification);
 
 	//[UnmanagedFunctionPointer(CallingConvention::Cdecl)]
-	private delegate void OnNotificationFromUnmanagedDelegate(Notification* _notification, void* _context);
+	//private delegate void OnNotificationFromUnmanagedDelegate(Notification* _notification, void* _context);
 
 	// Logging levels
 	public enum class ZWLogLevel
@@ -313,7 +314,10 @@ namespace OpenZWaveDotNet
 		 * \return True if a new driver was created, false if a driver for the controller already exists.
 		 * \see Create, Get, RemoveDriver
 		 */
-		 //bool AddDriver(Platform::String serialPortName) { return Manager::Get()->AddDriver(ConvertTo<string>(serialPortName)); }
+		 bool AddDriver(Platform::String^ serialPortName) 
+		 { 
+			 return Manager::Get()->AddDriver(ConvertTo<string>(serialPortName)); 
+		 }
 		 //bool AddDriver(Platform::String serialPortName, ZWControllerInterface interfaceType) { return Manager::Get()->AddDriver(ConvertTo<string>(serialPortName), (Driver::ControllerInterface) interfaceType); }
 
 		/**
@@ -2305,7 +2309,7 @@ namespace OpenZWaveDotNet
 		void  OnControllerStateChangedFromUnmanaged(Driver::ControllerState _state, void* _context);		// Forward controller state change to managed delegates hooked via Event addhandler 
 
 		/*GCHandle										m_gchNotification;*/
-		OnNotificationFromUnmanagedDelegate^			m_onNotification;
+		//OnNotificationFromUnmanagedDelegate^			m_onNotification;
 
 		/*GCHandle										m_gchControllerState;*/
 		OnControllerStateChangedFromUnmanagedDelegate^	m_onStateChanged;

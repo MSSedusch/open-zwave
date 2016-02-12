@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 #include "ZWOptions.h"
 
-using namespace OpenZWaveDotNet;
+using namespace OpenZWaveWinRT;
 using namespace OpenZWave;
 //using namespace Runtime::InteropServices;
 
@@ -52,15 +52,15 @@ void ZWOptions::Create
 // <ZWOptions::AddOptionBool>
 // Add a boolean option to the program
 //-----------------------------------------------------------------------------
-//bool ZWOptions::AddOptionBool
-//( 
-//	String^ _name,
-//	bool _default
-//)
-//{ 
-//	const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
-//	return Options::Get()->AddOptionBool( name, _default ); 
-//}
+bool ZWOptions::AddOptionBool
+( 
+	Platform::String^ _name,
+	bool _default
+)
+{ 
+	//const char* name = (const char*)(Marshal::StringToHGlobalAnsi(_name)).ToPointer();
+	return true; // Options::Get()->AddOptionBool(name, _default);
+}
 
 //-----------------------------------------------------------------------------
 // <ZWOptions::AddOptionInt>

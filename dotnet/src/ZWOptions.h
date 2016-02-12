@@ -41,7 +41,7 @@
 using namespace OpenZWave;
 
 
-namespace OpenZWaveDotNet
+namespace OpenZWaveWinRT
 {
 	public enum class ZWOptionType
 	{
@@ -213,5 +213,5 @@ namespace OpenZWaveDotNet
 		bool AreLocked(){ return Options::Get()->AreLocked(); }
 	};
 
-} // namespace OpenZWaveDotNet
+} // namespace OpenZWaveWinRT
 
