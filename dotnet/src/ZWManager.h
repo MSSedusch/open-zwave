@@ -1752,19 +1752,19 @@ namespace OpenZWaveWinRT
 		//	 */
 		//	void HealNetwork(uint32 const homeId, bool doRR) { Manager::Get()->HealNetwork(homeId, doRR); }
 
-		//	/**
-		//	* \brief Start the Inclusion Process to add a Node to the Network.
-		//	* The Status of the Node Inclusion is communicated via Notifications. Specifically, you should
-		//	* monitor ControllerCommand Notifications.
-		//	*
-		//	* Results of the AddNode Command will be send as a Notification with the Notification type as
-		//	* Notification::Type_ControllerCommand
-		//	*
-		//	* \param homeId The Home ID of the Z-Wave network where the device should be added.
-		//	* \param doSecurity Whether to initialize the Network Key on the device if it supports the Security CC
-		//	* \return if the Command was sent succcesfully to the Controller
-		//	*/
-		//	bool AddNode(uint32 const homeId, bool doSecurity) { return Manager::Get()->AddNode(homeId, doSecurity); }
+		/**
+		* \brief Start the Inclusion Process to add a Node to the Network.
+		* The Status of the Node Inclusion is communicated via Notifications. Specifically, you should
+		* monitor ControllerCommand Notifications.
+		*
+		* Results of the AddNode Command will be send as a Notification with the Notification type as
+		* Notification::Type_ControllerCommand
+		*
+		* \param homeId The Home ID of the Z-Wave network where the device should be added.
+		* \param doSecurity Whether to initialize the Network Key on the device if it supports the Security CC
+		* \return if the Command was sent succcesfully to the Controller
+		*/
+		bool AddNode(uint32 homeId, bool doSecurity) { return Manager::Get()->AddNode(homeId, doSecurity); }
 
 		//	/**
 		//	* \brief Remove a Device from the Z-Wave Network
