@@ -83,13 +83,13 @@ void ZWManager::OnControllerStateChangedFromUnmanaged
 //-----------------------------------------------------------------------------
 bool ZWManager::GetValueAsBool
 ( 
-	ZWValueID^ id, bool o_value
+	ZWValueID^ id, bool* o_value
 )
 { 
 	bool value;
 	if( Manager::Get()->GetValueAsBool(id->CreateUnmanagedValueID(), &value ) )
 	{
-		o_value = value;
+		*o_value = value;
 		return true;
 	}
 	return false;
@@ -102,13 +102,13 @@ bool ZWManager::GetValueAsBool
 bool ZWManager::GetValueAsByte
 ( 
 	ZWValueID^ id,
-	BYTE o_value
+	BYTE* o_value
 )
 { 
 	uint8 value;
 	if( Manager::Get()->GetValueAsByte(id->CreateUnmanagedValueID(), &value ) )
 	{
-		o_value = value;
+		*o_value = value;
 		return true;
 	}
 	return false;
@@ -179,7 +179,7 @@ bool ZWManager::GetValueAsShort
 bool ZWManager::GetValueAsString
 ( 
 	ZWValueID^ id, 
-	Platform::String^ o_value
+	Platform::String^* o_value
 )
 { 
 	string value;
@@ -187,7 +187,7 @@ bool ZWManager::GetValueAsString
 	{
 		std::wstring wid_str = std::wstring(value.begin(), value.end());
 		const wchar_t* w_char = wid_str.c_str();
-		o_value = ref new Platform::String(w_char);
+		*o_value = ref new Platform::String(w_char);
 		return true;
 	}
 	return false;

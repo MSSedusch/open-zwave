@@ -162,7 +162,7 @@ namespace OpenZWaveWinRT
 		uint8		GetCommandClassId()	{ return m_valueId->GetCommandClassId(); }
 		uint8		GetInstance()		{ return m_valueId->GetInstance(); }
 		uint8		GetIndex()			{ return m_valueId->GetIndex(); }
-		//ValueType	GetType()			{ return (ValueType)Enum::ToObject( ValueType::typeid, m_valueId->GetType() ); }
+		uint32	GetValueType()		{ return (uint32)m_valueId->GetType(); }
 		uint64		GetId()				{ return m_valueId->GetId(); }
 
 		// Comparison Operators

@@ -1100,7 +1100,7 @@ namespace OpenZWaveWinRT
 		 * \return true if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_Bool. The type can be tested with a call to ZWValueID::GetType.
 		 * \see ValueID::GetType, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueListItems
 		 */
-		bool GetValueAsBool(ZWValueID^ id, bool o_value);
+		bool GetValueAsBool(ZWValueID^ id, bool* o_value);
 
 		/**
 		 * \brief Gets a value as an 8-bit unsigned integer.
@@ -1110,7 +1110,7 @@ namespace OpenZWaveWinRT
 		 * \return true if the value was obtained.  Returns false if the value is not a ZWValueID::ValueType_Byte. The type can be tested with a call to ZWValueID::GetType
 		 * \see ValueID::GetType, GetValueAsBool, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueAsString, GetValueListSelection, GetValueListItems
 		 */
-		bool GetValueAsByte(ZWValueID^ id, BYTE o_value);
+		bool GetValueAsByte(ZWValueID^ id, BYTE* o_value);
 
 		/**
 		 * \brief Gets a value as a decimal.
@@ -1151,7 +1151,7 @@ namespace OpenZWaveWinRT
 		 * \return true if the value was obtained.</returns>
 		 * \see ValueID::GetType, GetValueAsBool, GetValueAsByte, GetValueAsDecimal, GetValueAsInt, GetValueAsShort, GetValueListSelection, GetValueListItems
 		 */
-		bool GetValueAsString(ZWValueID^ id, Platform::String^ o_value);
+		bool GetValueAsString(ZWValueID^ id, Platform::String^* o_value);
 
 		/**
 		 * \brief Gets the selected item from a list value (as a string).
@@ -1766,18 +1766,18 @@ namespace OpenZWaveWinRT
 		*/
 		bool AddNode(uint32 homeId, bool doSecurity) { return Manager::Get()->AddNode(homeId, doSecurity); }
 
-		//	/**
-		//	* \brief Remove a Device from the Z-Wave Network
-		//	* The Status of the Node Removal is communicated via Notifications. Specifically, you should
-		//	* monitor ControllerCommand Notifications.
-		//	*
-		//	* Results of the AddNode Command will be send as a Notification with the Notification type as
-		//	* Notification::Type_ControllerCommand
-		//	*
-		//	* \param homeId The HomeID of the Z-Wave network where you want to remove the device
-		//	* \return if the Command was send succesfully to the Controller
-		//	*/
-		//	bool RemoveNode(uint32 const homeId) { return Manager::Get()->RemoveNode(homeId); }
+		/**
+		* \brief Remove a Device from the Z-Wave Network
+		* The Status of the Node Removal is communicated via Notifications. Specifically, you should
+		* monitor ControllerCommand Notifications.
+		*
+		* Results of the AddNode Command will be send as a Notification with the Notification type as
+		* Notification::Type_ControllerCommand
+		*
+		* \param homeId The HomeID of the Z-Wave network where you want to remove the device
+		* \return if the Command was send succesfully to the Controller
+		*/
+		bool RemoveNode(uint32 homeId) { return Manager::Get()->RemoveNode(homeId); }
 
 		//	/**
 		//	* \brief Remove a Failed Device from the Z-Wave Network
